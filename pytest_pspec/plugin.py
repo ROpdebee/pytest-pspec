@@ -32,7 +32,10 @@ def pytest_configure(config):
 
 def pytest_collection_modifyitems(config, items):
     for item in items:
-        node = item.obj
+        try:
+            node = item.obj
+        except AttributeError:
+            continue
         parent = item.parent.obj
         node_parts = item.nodeid.split('::')
         node_str = node.__doc__ or node_parts[-1]
